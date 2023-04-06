@@ -1,15 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
+import { ConfigService } from '@nestjs/config';
 
 @Injectable({})
 export class ProductsService{
     ms_products: ClientProxy;
-    constructor(){ 
+    constructor(private readonly configService: ConfigService){ 
+
+        const MSPRODUCTSHOST = this.configService.get<string>('MSPRODUCTSHOST');
+        const MSPRODUCTSPORT = this.configService.get<number>('MSPRODUCTSPORT');
+
         this.ms_products = ClientProxyFactory.create({
             transport: Transport.TCP,
             options: {
-              host: '127.0.0.1',
-              port: 4444,
+              host: MSPRODUCTSHOST,
+              port: MSPRODUCTSPORT,
             },
         });
     }

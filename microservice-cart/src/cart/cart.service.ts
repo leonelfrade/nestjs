@@ -7,23 +7,23 @@ export class CartService {
     async get_cart(data) {  
         const { shoppingCartId } = data;
 
-        const result = await CartEntity.createQueryBuilder('cart')
+        let result = await CartEntity.createQueryBuilder('cart')
         .select(['cart.shoppingCartId','SUM(cart.quantity * cart.price) as totalPrice','SUM(cart.quantity) as total_quantity'])
         .where('cart.shoppingCartId = :shoppingCartId', { shoppingCartId })
         .groupBy('cart.shoppingCartId')
         .getRawOne();
 
-        result.userid = 11111111
-        
-       
+        if(result){
 
+            result.userid = 11111111           
+            const cartProducts = await CartEntity.createQueryBuilder('cart')
+            .where('cart.shoppingCartId = :shoppingCartId', { shoppingCartId })
+            .getMany();
 
-        const cartProducts = await CartEntity.createQueryBuilder('cart')
-        .where('cart.shoppingCartId = :shoppingCartId', { shoppingCartId })
-        .getMany();
-
-        result.products = cartProducts
-
+            result.products = cartProducts
+        }else{
+            result = []
+        }
 
         return result;
     }

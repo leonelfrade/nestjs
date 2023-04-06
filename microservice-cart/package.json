@@ -18,13 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-
     "db:dev:rm": "docker compose rm postgres -s -f -v",
     "db:dev:up": "docker compose up postgres -d",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.3.12",
     "@nestjs/platform-express": "^9.0.0",

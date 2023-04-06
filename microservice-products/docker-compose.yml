@@ -9,7 +9,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 123
     ports:
       - "4440:27017"
-    volumes:
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-volumes:
-  mongo_data:
